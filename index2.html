@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ChatApp</title>
+</head>
+<body>
+
+
+<script>
+
+    const create_room = () => {
+        var http = new XMLHttpRequest();
+        var url = '/create_room';
+        var room_name = document.getElementById("room_name").value;
+
+        http.open('POST', url);
+        http.setRequestHeader('Content-type', 'application/json;charset=UTF-8');
+        http.send(JSON.stringify({room_name: room_name}));
+
+        http.onreadystatechange = function()
+        {
+            if(http.readyState == 4 && http.status == 200)
+            {
+                console.log("Message sent")
+            }
+            else {
+                alert("error in sending message ")
+                console.log("error in sending message ")
+            }
+        }
+    }
+
+    const list_rooms = () => {
+        var html = '<br><textarea id="roomArea" rows="8" cols="50"> </textarea><br>'
+        var box = document.getElementById("div");
+        box.innerHTML = "";
+        box.innerHTML += html;
+
+        var http = new XMLHttpRequest();
+        var url = '/list_rooms';
+
+        http.open('GET', url);
+        http.setRequestHeader('Content-type', 'application/json;charset=UTF-8');
+        http.send();
+
+        http.onreadystatechange = function () {
+            if (http.readyState == 4 && http.status == 200) {
+
+                //var response = JSON.parse(http.responseText);
+                var response = http.responseText;
+
+                document.getElementById("roomArea").value = response;
+                console.log(response);
+            }
+        }
+    }
+
+
+
+
+</script>
+<button onclick="create_room()" type="submit">Create Room</button>
+<input type="text" id="room_name" required><br><br>
+<button onclick="list_rooms()" type="submit">List Rooms</button>
+<div id = 'div'></div><br><br>
+<button onclick="join_room()" type="submit">Join Room</button><br><br>
+</body>
+</html>

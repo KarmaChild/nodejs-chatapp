@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    
+    const show_chat = () => {
+        var html = '<br><textarea id="chatArea" rows="8" cols="50"> </textarea><br>'
+        var box = document.getElementById("div");
+        box.innerHTML = "";
+        box.innerHTML+=html;
+
+        const http = new XMLHttpRequest();
+        const url = '/show_chat';
+
+        http.open('GET', url);
+        http.setRequestHeader('Content-type', 'application/json;charset=UTF-8');
+        http.send();
+        http.onreadystatechange = function()
+        {
+            if(http.readyState == 4 && http.status == 200)
+            {
+
+                //var response = JSON.parse(http.responseText);
+                var response = http.responseText;
+
+                document.getElementById("chatArea").value = response;
+                console.log(response);
+            }
+        };
+    }
+
+    const add_chat = () => {
+        var http = new XMLHttpRequest();
+        var url = '/add_chat';
+        var chat = document.getElementById("chat").value;
+
+        http.open('POST', url);
+        http.setRequestHeader('Content-type', 'application/json;charset=UTF-8');
+        http.send(JSON.stringify({chat: chat}));
+
+        http.onreadystatechange = function()
+        {
+            if(http.readyState == 4 && http.status == 200)
+            {
+                console.log("Message sent")
+                }
+                else {
+                alert("error in sending message ")
+                console.log("error in sending message ")
+            }
+        }
+    }
+
+    const delete_chats = () => {
+        var http = new XMLHttpRequest();
+        var url = '/delete_chats';
+
+        http.open('DELETE', url);
+        http.setRequestHeader('Content-type', 'application/json;charset=UTF-8');
+        http.send();
+    }
+    
+</script>
+
+<h2>All chats:</h2>
+<button onclick="show_chat()" type="submit">Show chats</button>
+<button onclick="delete_chats()" type="submit">Delete chats</button>
+<div id = 'div'></div>
+
+<br><br>
+
+<h2>Add Chat</h2>
+
+<label for="chat">Your Message: </label>
+<input type="text" id="chat" required><br><br>
+<button onclick="add_chat()" type="submit">Send</button><br><br>
+
+</body>
+</html>
