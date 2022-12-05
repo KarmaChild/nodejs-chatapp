@@ -29,7 +29,4 @@ app.delete('/delete_chats', (req,res) =>{
   chatroom = [];
 })
 
-
-
-
 app.listen(port,()=>console.log('Express server running at port '+port))

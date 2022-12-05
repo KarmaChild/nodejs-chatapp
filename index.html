@@ -54,6 +54,7 @@
                 console.log("error in sending message ")
             }
         }
+        show_chat()
     }
 
     const delete_chats = () => {
@@ -67,18 +68,19 @@
     
 </script>
 
-<h2>All chats:</h2>
-<button onclick="show_chat()" type="submit">Show chats</button>
-<button onclick="delete_chats()" type="submit">Delete chats</button>
-<div id = 'div'></div>
-
-<br><br>
-
 <h2>Add Chat</h2>
 
 <label for="chat">Your Message: </label>
 <input type="text" id="chat" required><br><br>
 <button onclick="add_chat()" type="submit">Send</button><br><br>
+
+
+<br><br>
+
+<h2>All chats:</h2>
+<button onclick="show_chat()" type="submit">Show chats</button>
+<button onclick="delete_chats()" type="submit">Delete chats</button>
+<div id = 'div'></div>
 
 </body>
 </html>
